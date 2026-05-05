@@ -36,10 +36,12 @@
 
 /* Эффект наведения для кнопок управления */
 .window-button:hover {
+    -fx-underline: false;
     -fx-background-color: #4c566a; /* Светло-серый */
 }
 
 .window-button-close:hover {
+    -fx-underline: false;
     -fx-background-color: #bf616a; /* Красный */
 }
 
@@ -48,4 +50,19 @@
 .danger:hover {
     -fx-background-color: #ca1825; /* Красный оттенок Nord */
     -fx-text-fill: white;
+}
+
+/* Обращаемся ко всем кнопкам в любом состоянии */
+.button, .button:hover, .button:focused {
+    -fx-underline: false; /* Отключаем подчеркивание */
+}
+
+/* На всякий случай пропишем для твоих кастомных кнопок заголовка */
+.window-button:hover, .window-button-close:hover {
+    -fx-underline: false;
+}
+
+/* И для плоских кнопок в сайдбаре (стиль flat из AtlantaFX) */
+.button.flat:hover {
+    -fx-underline: false;
 }

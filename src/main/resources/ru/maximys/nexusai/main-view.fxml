@@ -6,6 +6,7 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import atlantafx.base.controls.Spacer?>
 <VBox xmlns="http://javafx.com"
       xmlns:fx="http://javafx.com"
       fx:controller="ru.maximys.nexusai.ui.controller.MainController"
@@ -36,7 +37,10 @@
 
         <Pane HBox.hgrow="ALWAYS" />
 
-    <!-- Группа кнопок управления -->
+        <!-- Заглушка под Профиль (появится позже) -->
+        <Button text="Профиль" styleClass="flat" style="-fx-text-fill: -color-accent-fg;"/>
+
+        <!-- Группа кнопок управления -->
         <Button fx:id="minimizeButton" text="—" onAction="#onMinimizeClick"
                 styleClass="window-button" />
 
@@ -48,21 +52,38 @@
 
     </HBox>
 
+    <!-- Основная рабочая область -->
+    <HBox VBox.vgrow="ALWAYS">
+        <!-- Боковая панель (Sidebar) -->
+        <VBox prefWidth="200" spacing="5" style="-fx-background-color: -color-bg-inset; -fx-padding: 10;">
+            <Label text="ФУНКЦИИ" style="-fx-font-size: 10; -fx-text-fill: -color-fg-muted; -fx-padding: 0 0 5 5;"/>
 
-    <!-- Основной контент приложения -->
-    <VBox alignment="CENTER" spacing="20" VBox.vgrow="ALWAYS">
+            <Button text="Текст"
+                    onAction="#onChatButtonClick"
+                    maxWidth="Infinity"
+                    alignment="BASELINE_LEFT"
+                    styleClass="flat" />
 
-        <Label text="Добро пожаловать в Nexus AI" styleClass="title-2"/>
+            <Button text="Изображения" maxWidth="Infinity" alignment="BASELINE_LEFT" styleClass="flat" />
+            <Button text="Видео" maxWidth="Infinity" alignment="BASELINE_LEFT" styleClass="flat" />
+            <Button text="Аудио" maxWidth="Infinity" alignment="BASELINE_LEFT" styleClass="flat" />
 
-        <HBox alignment="CENTER" spacing="15">
-            <Button text="Начать поиск" styleClass="accent, large"/>
-            <Button text="Настройки" styleClass="button-outlined, large"/>
-        </HBox>
+            <Spacer VBox.vgrow="ALWAYS"/>
+            <Separator />
+            <Button text="Настройки"
+                    onAction="#onSettingButtonClick"
+                    maxWidth="Infinity"
+                    alignment="BASELINE_LEFT"
+                    styleClass="flat" />
+        </VBox>
 
-        <Separator maxWidth="400"/>
-
-        <Button text="О программе" styleClass="flat"/>
-
-    </VBox>
+        <!-- Контент справа (тут будут карточки нейросетей) -->
+        <StackPane fx:id="contentArea" HBox.hgrow="ALWAYS" style="-fx-background-color: -color-bg-default; -fx-padding: 20;">
+            <VBox alignment="CENTER" spacing="20">
+                <Label text="Выберите тип генерации слева" styleClass="title-2" />
+                <Label text="Здесь появятся доступные нейросети" styleClass="text-muted" />
+            </VBox>
+        </StackPane>
+    </HBox>
 
 </VBox>

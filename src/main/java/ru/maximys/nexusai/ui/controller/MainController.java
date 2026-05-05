@@ -2,17 +2,26 @@ package ru.maximys.nexusai.ui.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+
+import java.io.IOException;
 
 @Component
 @Controller
 public class MainController {
 
+    private static final Logger log = LoggerFactory.getLogger(MainController.class);
     @FXML
     private HBox titleBar;
 
@@ -44,11 +53,54 @@ public class MainController {
     private double xOffset = 0;
     private double yOffset = 0;
 
+    @FXML private StackPane contentArea;
+
+    // Внедряем контекст Spring, чтобы он мог создавать контроллеры для новых окон
+    private final ApplicationContext springContext;
+
+    public MainController(ApplicationContext springContext) {
+        this.springContext = springContext;
+    }
+
+    // Универсальный метод для смены экрана
+    private void loadView(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/maximys/nexusai/" + fxmlPath));
+            // ВАЖНО: используем Spring для создания контроллера загружаемого файла
+            loader.setControllerFactory(springContext::getBean);
+
+            Parent view = loader.load();
+
+            contentArea.getChildren().clear(); // Очищаем старый экран
+            contentArea.getChildren().add(view); // Добавляем новый
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void onChatButtonClick() {
+        log.info("Переход в окно с чатом");
+        loadView("chat-view.fxml");
+    }
+
+    @FXML
+    public void onSettingButtonClick() {
+        log.info("Переход в окно с настройками");
+        loadView("setting-view.fxml");
+    }
+
+    @FXML
+    public void onImageButtonClick() {
+        // Здесь можно будет загрузить другой файл, например image-view.fxml
+        log.info("Переход к генерации изображений");
+    }
+
     @FXML
     public void initialize() {
-        System.out.println("Главное меню загружено");
+        log.info("Приложение запущено");
 
-        // ✅ Делаем заголовок перетаскиваемым
+        // Делаем заголовок перетаскиваемым
         titleBar.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();

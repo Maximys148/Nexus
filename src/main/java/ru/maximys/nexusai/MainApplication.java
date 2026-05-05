@@ -13,6 +13,8 @@ import javafx.stage.StageStyle;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import ru.maximys.nexusai.backend.config.AppSettings;
+import ru.maximys.nexusai.backend.service.SettingService;
 
 import java.util.Objects;
 
@@ -29,10 +31,10 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/maximys/nexusai/main-view.fxml"));
+        String savedTheme = springContext.getBean(AppSettings.class).getSavedTheme();
+        springContext.getBean(SettingService.class).apply(savedTheme);
 
-        // КЛЮЧЕВОЙ МОМЕНТ:
-        // Мы говорим JavaFX спрашивать объекты (контроллеры) у Spring
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/maximys/nexusai/main-view.fxml"));
         loader.setControllerFactory(springContext::getBean);
 
         Parent root = loader.load();
@@ -40,8 +42,6 @@ public class MainApplication extends Application {
         scene.setFill(Color.TRANSPARENT);
 
         stage.initStyle(StageStyle.TRANSPARENT);
-
-        Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
 
         stage.getIcons().add(new Image(Objects.requireNonNull(MainApplication.class.getResourceAsStream("/icons/icon.png"))));
         stage.setTitle("Nexus AI");

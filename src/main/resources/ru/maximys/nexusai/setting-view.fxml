@@ -1,0 +1,16 @@
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+
+<VBox spacing="20" alignment="TOP_LEFT" style="-fx-padding: 30;"
+      xmlns="http://javafx.com"
+      xmlns:fx="http://javafx.com"
+      fx:controller="ru.maximys.nexusai.ui.controller.SettingsController">
+    <Label text="Настройки внешнего вида" styleClass="title-2"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Тема приложения:"/>
+        <ComboBox fx:id="themeComboBox" prefWidth="200" promptText="Выберите тему"/>
+    </HBox>
+</VBox>
