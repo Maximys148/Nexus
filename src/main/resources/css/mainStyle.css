@@ -66,3 +66,23 @@
 .button.flat:hover {
     -fx-underline: false;
 }
+
+/* Общий стиль для всех сообщений */
+.user-message, .ai-message {
+    -fx-font-size: 14px;
+    -fx-padding: 8 12;
+}
+
+/* Сообщение пользователя */
+.user-message {
+    -fx-background-color: -color-accent-emphasis;
+    -fx-text-fill: -color-accent-fg;
+    -fx-background-radius: 15 15 2 15; /* Острый угол справа снизу */
+}
+
+/* Сообщение нейросети */
+.ai-message {
+    -fx-background-color: -color-bg-subtle;
+    -fx-text-fill: -color-fg-default;
+    -fx-background-radius: 15 15 15 2; /* Острый угол слева снизу */
+}

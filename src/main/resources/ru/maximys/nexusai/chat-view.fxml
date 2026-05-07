@@ -9,7 +9,7 @@
     <!-- Область диалога (скроллится) -->
     <ScrollPane fx:id="chatScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS"
                 styleClass="edge-to-edge" style="-fx-background-color: transparent;">
-        <VBox fx:id="messageContainer" spacing="10" style="-fx-padding: 10;">
+        <VBox fx:id="messageContainer" spacing="15" style="-fx-padding: 10;">
             <!-- Здесь будут появляться сообщения -->
             <Label text="Nexus AI: Привет! Чем я могу помочь?" styleClass="text-muted"/>
         </VBox>
@@ -17,8 +17,11 @@
 
     <!-- Поле ввода внизу -->
     <HBox spacing="10" alignment="CENTER">
-        <TextField fx:id="userMessageField" HBox.hgrow="ALWAYS"
-                   promptText="Напишите запрос..." styleClass="large"/>
+        <TextField fx:id="userMessageField"
+                   onAction="#onSendMessage"
+                   HBox.hgrow="ALWAYS"
+                   promptText="Напишите запрос..."
+                   styleClass="large"/>
         <Button text="Отправить" onAction="#onSendMessage" styleClass="accent, large"/>
     </HBox>
 </VBox>

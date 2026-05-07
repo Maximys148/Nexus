@@ -1,14 +1,21 @@
 package ru.maximys.nexusai.ui.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.maximys.nexusai.backend.service.ChatService;
 
 @Component
 public class ChatController {
+    @Autowired
+    private ChatService chatService;
 
     @FXML private VBox messageContainer;
     @FXML private TextField userMessageField;
@@ -19,21 +26,15 @@ public class ChatController {
         String userText = userMessageField.getText();
         if (userText.isEmpty()) return;
 
-        // 1. Добавляем сообщение пользователя в контейнер
-        Label userLabel = new Label("Вы: " + userText);
-        userLabel.getStyleClass().add("title-4"); // Пример стиля из AtlantaFX
-        messageContainer.getChildren().add(userLabel);
+        // 1. Добавляем сообщение пользователя (справа)
+        chatService.addMessage(userText, true, chatScrollPane, messageContainer);
 
-        // 2. Очищаем поле ввода
+        // Очищаем поле
         userMessageField.clear();
 
-        // 3. (Имитация) Ответ нейросети через твой сервис
-        Label aiLabel = new Label("Nexus AI: Я получил ваш запрос!");
-        aiLabel.setWrapText(true); // Чтобы текст переносился
-        aiLabel.getStyleClass().add("text-success"); // Зеленый текст
-        messageContainer.getChildren().add(aiLabel);
-
-        // 4. Прокрутка вниз
-        chatScrollPane.setVvalue(1.0);
+        // 2. Имитируем ответ нейросети (слева)
+        // Позже здесь будет вызов aiService.ask(userText)
+        chatService.addMessage("Ответ от Nexus AI на ваш запрос...", false, chatScrollPane, messageContainer);
     }
+
 }

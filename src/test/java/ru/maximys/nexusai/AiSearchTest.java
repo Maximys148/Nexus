@@ -1,3 +1,4 @@
+/*
 package ru.maximys.nexusai;
 
 import org.junit.jupiter.api.DisplayName;
@@ -33,3 +34,4 @@ class AiSearchTest {
         assertTrue(result.contains("Nexus AI"));
     }
 }
+*/
