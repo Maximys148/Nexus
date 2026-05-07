@@ -2,11 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
-
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import atlantafx.base.controls.Spacer?>
+
 <VBox xmlns="http://javafx.com"
       xmlns:fx="http://javafx.com"
       fx:controller="ru.maximys.nexusai.ui.controller.MainController"
@@ -15,72 +12,46 @@
       prefWidth="1000"
       prefHeight="600">
 
-    <HBox fx:id="titleBar"
-          alignment="CENTER_LEFT"
-          spacing="0"
-          prefHeight="38"
+    <!-- Заголовок (TitleBar) - ОСТАВЛЯЕМ КАК ЕСТЬ -->
+    <HBox fx:id="titleBar" alignment="CENTER_LEFT" spacing="0" prefHeight="38"
           style="-fx-background-color: -color-bg-subtle; -fx-padding: 0 0 0 15;">
-
-        <!-- Логотип приложения
-        <ImageView fx:id="logoView"
-                   fitHeight="25"
-                   fitWidth="25"
-                   pickOnBounds="true"
-                   preserveRatio="true">
-            <image>
-                <Image url="@/icons/icon.png"/>
-            </image>
-        </ImageView> -->
-
-        <!-- Название приложения -->
         <Label text="Nexus AI" styleClass="title-4" />
-
         <Pane HBox.hgrow="ALWAYS" />
-
-        <!-- Заглушка под Профиль (появится позже) -->
         <Button text="Профиль" styleClass="flat" style="-fx-text-fill: -color-accent-fg;"/>
-
-        <!-- Группа кнопок управления -->
-        <Button fx:id="minimizeButton" text="—" onAction="#onMinimizeClick"
-                styleClass="window-button" />
-
-        <Button fx:id="maximizeButton" text="🗖" onAction="#onMaximizeClick"
-                styleClass="window-button" />
-
-        <Button fx:id="closeButton" text="✕" onAction="#onCloseClick"
-                styleClass="window-button-close" />
-
+        <Button fx:id="minimizeButton" text="—" onAction="#onMinimizeClick" styleClass="window-button" />
+        <Button fx:id="maximizeButton" text="🗖" onAction="#onMaximizeClick" styleClass="window-button" />
+        <Button fx:id="closeButton" text="✕" onAction="#onCloseClick" styleClass="window-button-close" />
     </HBox>
 
-    <!-- Основная рабочая область -->
+    <!-- Основная рабочая область - ОСТАВЛЯЕМ КАК ЕСТЬ -->
     <HBox VBox.vgrow="ALWAYS">
-        <!-- Боковая панель (Sidebar) -->
         <VBox prefWidth="200" spacing="5" style="-fx-background-color: -color-bg-inset; -fx-padding: 10;">
             <Label text="ФУНКЦИИ" style="-fx-font-size: 10; -fx-text-fill: -color-fg-muted; -fx-padding: 0 0 5 5;"/>
-
-            <Button text="Текст"
-                    onAction="#onChatButtonClick"
-                    maxWidth="Infinity"
-                    alignment="BASELINE_LEFT"
-                    styleClass="flat" />
-
+            <Button text="Текст" onAction="#onChatButtonClick" maxWidth="Infinity" alignment="BASELINE_LEFT" styleClass="flat" />
             <Button text="Изображения" maxWidth="Infinity" alignment="BASELINE_LEFT" styleClass="flat" />
             <Button text="Видео" maxWidth="Infinity" alignment="BASELINE_LEFT" styleClass="flat" />
             <Button text="Аудио" maxWidth="Infinity" alignment="BASELINE_LEFT" styleClass="flat" />
-
             <Spacer VBox.vgrow="ALWAYS"/>
             <Separator />
-            <Button text="Настройки"
-                    onAction="#onSettingButtonClick"
+            <Button text="Настройки" onAction="#onSettingButtonClick" maxWidth="Infinity" alignment="BASELINE_LEFT" styleClass="flat" />
+            <!-- [ПЕРЕНЕСЕНО СЮДА] Кнопка обновления -->
+            <Button fx:id="updateButton"
+                    text="Обновить Nexus AI"
+                    onAction="#onUpdateClick"
+                    visible="false"
+                    managed="false"
                     maxWidth="Infinity"
                     alignment="BASELINE_LEFT"
-                    styleClass="flat" />
+                    styleClass="flat"
+                    style="-fx-text-fill: -color-warning-fg; -fx-font-weight: bold;"/>
+
+            <!-- Метка версии (теперь просто маленькая цифра в самом низу) -->
+            <Label fx:id="versionLabel" style="-fx-font-size: 10; -fx-opacity: 0.4; -fx-padding: 5 0 0 5;"/>
         </VBox>
 
-        <!-- Контент справа (тут будут карточки нейросетей) -->
         <StackPane fx:id="contentArea" HBox.hgrow="ALWAYS" style="-fx-background-color: -color-bg-default; -fx-padding: 20;">
             <VBox alignment="CENTER" spacing="20">
-                <Label text="Выберите тип генерации слева" styleClass="title-2" />
+                <Label text="Проверка обновления(должна быть версия 0.1.2)" styleClass="title-2" />
                 <Label text="Здесь появятся доступные нейросети" styleClass="text-muted" />
             </VBox>
         </StackPane>

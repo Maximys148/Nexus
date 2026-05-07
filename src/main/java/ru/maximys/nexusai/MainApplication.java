@@ -23,6 +23,13 @@ public class MainApplication extends Application {
 
     private ConfigurableApplicationContext springContext;
 
+    // В MainApplication.java
+    private static MainApplication instance;
+
+    public static MainApplication getInstance() {
+        return instance;
+    }
+
     @Override
     public void init() {
         // Запускаем Spring при старте приложения
@@ -31,6 +38,8 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        instance = this;
+
         String savedTheme = springContext.getBean(AppSettings.class).getSavedTheme();
         springContext.getBean(SettingService.class).apply(savedTheme);
 
