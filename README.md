@@ -13,7 +13,7 @@
 
 ## 🛠 Установка и запуск
 
-1. Перейдите в раздел [Releases]([https://github.com](https://github.com/Maximys148/NexusAI/releases/latest)).
+1. Перейдите в раздел [Releases]((https://github.com/Maximys148/NexusAI/releases/latest)).
 2. Скачайте последний архив `Nexus.zip`.
 3. Распакуйте в удобное место.
 4. Запустите `NexusAI.exe`.
@@ -25,9 +25,8 @@
 ### v0.1.0
 *  Создание первой тестовой версии приложения
 
-
 ##  Разработчик
-* **Maximys** — [GitHub Profile](https://github.com/Maximys148)
+* **[Maximys](https://github.com/Maximys148)**
 
 ---
 
