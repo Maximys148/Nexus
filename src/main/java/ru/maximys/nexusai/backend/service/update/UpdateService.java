@@ -101,8 +101,8 @@ public class UpdateService {
                         "echo [Nexus AI Update] Замена файлов...",
                         "move /y \"" + tempJarPath + "\" \"" + currentJarPath + "\"",
                         "echo [Nexus AI Update] Перезапуск...",
-                        "start \"\" \"" + exePath + "\"",
-                        "del \"%~f0\""
+                        "(goto) 2>nul & del \"%~f0\"",
+                        "start \"\" \"" + exePath + "\" & exit"
                 );
 
                 Files.write(Paths.get("updater.bat"), commands, StandardCharsets.UTF_8);
