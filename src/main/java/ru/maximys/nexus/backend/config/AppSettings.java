@@ -1,11 +1,11 @@
-package ru.maximys.nexusai.backend.config;
+package ru.maximys.nexus.backend.config;
 
 import java.util.prefs.Preferences;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AppSettings {
-    private final Preferences prefs = Preferences.userRoot().node("ru.maximys.nexusai");
+    private final Preferences prefs = Preferences.userRoot().node("ru.maximys.nexus");
     private static final String THEME_KEY = "selected_theme";
 
     public void saveTheme(String themeName) {

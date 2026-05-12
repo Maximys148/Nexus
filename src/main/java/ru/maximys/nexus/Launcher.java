@@ -1,4 +1,4 @@
-package ru.maximys.nexusai;
+package ru.maximys.nexus;
 
 // Класс для обхода ошибки работы с javaFX
 

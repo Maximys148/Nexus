@@ -1,11 +1,11 @@
-package ru.maximys.nexusai.ui.controller;
+package ru.maximys.nexus.ui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
-import ru.maximys.nexusai.backend.service.ChatService;
+import ru.maximys.nexus.backend.service.ChatService;
 
 // Контролер отвечающий за отображения страницы чата (chat-view.fxml)
 

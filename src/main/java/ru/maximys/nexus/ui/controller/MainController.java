@@ -1,4 +1,4 @@
-package ru.maximys.nexusai.ui.controller;
+package ru.maximys.nexus.ui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,8 +9,7 @@ import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import ru.maximys.nexusai.backend.service.MainService;
+import ru.maximys.nexus.backend.service.MainService;
 
 import java.util.HashMap;
 import java.util.Map;

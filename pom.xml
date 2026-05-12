@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>sample</groupId>
-    <artifactId>AiSearchFX</artifactId>
-    <version>0.2.0</version>
-    <name>AiSearchFX</name>
+    <artifactId>Nexus</artifactId>
+    <version>0.2.1</version>
+    <name>Nexus</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -84,7 +84,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.maximys.nexusai.Launcher</mainClass>
+                    <mainClass>ru.maximys.nexus.Launcher</mainClass>
                     <!-- Это заставит Spring не перепаковывать JAR в свой формат -->
                     <skip>true</skip>
                 </configuration>

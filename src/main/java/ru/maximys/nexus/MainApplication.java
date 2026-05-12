@@ -1,23 +1,12 @@
-package ru.maximys.nexusai;
+package ru.maximys.nexus;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-import ru.maximys.nexusai.backend.config.AppSettings;
-import ru.maximys.nexusai.backend.service.LanguageService;
-import ru.maximys.nexusai.backend.service.MainApplicationService;
-import ru.maximys.nexusai.backend.service.SettingService;
-
-import java.util.Objects;
+import ru.maximys.nexus.backend.service.MainApplicationService;
 
 // Класс запуска приложения
 

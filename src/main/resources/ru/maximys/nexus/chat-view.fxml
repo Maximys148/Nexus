@@ -5,13 +5,13 @@
 <VBox spacing="10" alignment="TOP_CENTER" VBox.vgrow="ALWAYS" style="-fx-padding: 15;"
       xmlns="http://javafx.com"
       xmlns:fx="http://javafx.com"
-      fx:controller="ru.maximys.nexusai.ui.controller.ChatController">
+      fx:controller="ru.maximys.nexus.ui.controller.ChatController">
     <!-- Область диалога -->
     <ScrollPane fx:id="chatScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS"
                 styleClass="edge-to-edge" style="-fx-background-color: transparent;">
         <VBox fx:id="messageContainer" spacing="15" style="-fx-padding: 10;">
             <!-- Здесь будут появляться сообщения -->
-            <Label text="Nexus AI: Привет! Чем я могу помочь?" styleClass="text-muted"/>
+            <Label text="Nexus: Привет! Чем я могу помочь?" styleClass="text-muted"/>
         </VBox>
     </ScrollPane>
 
