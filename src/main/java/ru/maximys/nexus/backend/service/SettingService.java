@@ -1,4 +1,4 @@
-package ru.maximys.nexusai.backend.service;
+package ru.maximys.nexus.backend.service;
 
 import atlantafx.base.theme.*;
 import jakarta.annotation.PostConstruct;
@@ -7,11 +7,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Labeled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.maximys.nexusai.backend.config.AppSettings;
+import ru.maximys.nexus.backend.config.AppSettings;
 
-import java.util.HashMap;
 import java.util.Map;
 
 // Сервис отвечающий за бизнес логику контролера SettingController

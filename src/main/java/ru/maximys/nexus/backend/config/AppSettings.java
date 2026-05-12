@@ -1,4 +1,4 @@
-package ru.maximys.nexusai.backend.config;
+package ru.maximys.nexus.backend.config;
 
 import java.util.prefs.Preferences;
 import org.springframework.stereotype.Component;

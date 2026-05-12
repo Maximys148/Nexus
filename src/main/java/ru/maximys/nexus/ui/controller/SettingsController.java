@@ -1,11 +1,11 @@
-package ru.maximys.nexusai.ui.controller;
+package ru.maximys.nexus.ui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import org.springframework.stereotype.Component;
-import ru.maximys.nexusai.backend.service.SettingService;
+import ru.maximys.nexus.backend.service.SettingService;
 
 import java.util.HashMap;
 import java.util.Map;

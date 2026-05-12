@@ -1,8 +1,7 @@
-package ru.maximys.nexusai.backend.service;
+package ru.maximys.nexus.backend.service;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Labeled;
 import javafx.scene.layout.HBox;
@@ -11,7 +10,7 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ru.maximys.nexusai.backend.service.update.UpdateService;
+import ru.maximys.nexus.backend.service.update.UpdateService;
 
 import java.util.Map;
 

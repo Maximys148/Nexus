@@ -1,4 +1,4 @@
-package ru.maximys.nexusai.backend.service;
+package ru.maximys.nexus.backend.service;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;

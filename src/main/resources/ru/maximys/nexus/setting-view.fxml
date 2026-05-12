@@ -8,7 +8,7 @@
 <VBox spacing="20" alignment="TOP_LEFT" style="-fx-padding: 30;"
       xmlns="http://javafx.com"
       xmlns:fx="http://javafx.com"
-      fx:controller="ru.maximys.nexusai.ui.controller.SettingsController">
+      fx:controller="ru.maximys.nexus.ui.controller.SettingsController">
 
     <Label fx:id="settingsHeaderLabel" text="Настройки внешнего вида" styleClass="title-2"/>
 

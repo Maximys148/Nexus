@@ -6,7 +6,7 @@
 
 <VBox xmlns="http://javafx.com"
       xmlns:fx="http://javafx.com"
-      fx:controller="ru.maximys.nexusai.ui.controller.MainController"
+      fx:controller="ru.maximys.nexus.ui.controller.MainController"
       stylesheets="@/css/mainStyle.css"
       spacing="0"
       prefWidth="1000"

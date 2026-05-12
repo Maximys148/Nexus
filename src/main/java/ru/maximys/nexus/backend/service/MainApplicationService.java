@@ -1,4 +1,4 @@
-package ru.maximys.nexusai.backend.service;
+package ru.maximys.nexus.backend.service;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,7 +33,7 @@ public class MainApplicationService {
         stage.getIcons().add(icon);
 
         // Загрузка FXML через Spring
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/maximys/nexusai/main-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/maximys/nexus/main-view.fxml"));
         loader.setControllerFactory(springContext::getBean);
         loader.setResources(langService.getCurrentBundle());
 
