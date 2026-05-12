@@ -11,8 +11,8 @@
 
 ## 🛠 Установка и запуск
 
-1. Перейдите в раздел [Releases](https://github.com/Maximys148/Nexus/releases).
-2. Скачайте последний архив `Nexuszip`.
+1. Перейдите в раздел [Releases](https://github.com/Maximys148/Nexus/releases/latest).
+2. Скачайте архив `Nexuszip`.
 3. Распакуйте в удобное место.
 4. Запустите `Nexus.exe`.
 
