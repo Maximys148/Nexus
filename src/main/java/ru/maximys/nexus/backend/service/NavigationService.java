@@ -1,11 +1,10 @@
-package ru.maximys.nexusai.backend.service;
+package ru.maximys.nexus.backend.service;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class NavigationService {
     public void load(StackPane container, String fxmlName) {
         try {
             // Формируем путь
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/maximys/nexusai/" + fxmlName));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ru/maximys/nexus/" + fxmlName));
 
             // Позволяем Spring внедрять зависимости в новые контроллеры
             loader.setControllerFactory(springContext::getBean);

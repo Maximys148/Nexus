@@ -1,4 +1,4 @@
-package ru.maximys.nexusai.backend.service.update;
+package ru.maximys.nexus.backend.service.update;
 
 import javafx.application.Platform;
 import org.slf4j.Logger;
@@ -6,14 +6,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.maximys.nexusai.MainApplication;
-import ru.maximys.nexusai.ui.controller.MainController;
+import ru.maximys.nexus.MainApplication;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
