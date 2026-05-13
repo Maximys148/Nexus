@@ -1,0 +1,60 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: nexus-server
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nexusdb
+    username: nexus
+    password: nexus_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
+
+nexus:
+  ai:
+    providers:
+      openai:
+        api-key: ${OPENAI_API_KEY}
+        base-url: https://api.openai.com/v1
+      anthropic:
+        api-key: ${ANTHROPIC_API_KEY}
+        base-url: https://api.anthropic.com/v1
+      gemini:
+        api-key: ${GEMINI_API_KEY}
+        base-url: https://generativelanguage.googleapis.com/v1beta
+    n8n:
+      webhook-url: ${N8N_WEBHOOK_URL:http://localhost:5678/webhook/nexus-assistant}
+      timeout: 30000
+
+jwt:
+  secret: ${JWT_SECRET:your-secret-key-change-in-production-min-32-chars}
+  expiration-ms: 86400000
+
+logging:
+  level:
+    com.nexus: DEBUG
+    org.springframework.security: DEBUG

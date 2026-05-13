@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: nexus-postgres
+    environment:
+      POSTGRES_DB: nexusdb
+      POSTGRES_USER: nexus
+      POSTGRES_PASSWORD: nexus_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - nexus-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nexus-server:
+    build: .
+    container_name: nexus-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/nexusdb
+      SPRING_DATASOURCE_USERNAME: nexus
+      SPRING_DATASOURCE_PASSWORD: nexus_password
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      N8N_WEBHOOK_URL: http://n8n:5678/webhook/nexus-assistant
+      JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-in-production-min-32-chars}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - nexus-network
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: nexus-n8n
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin
+      - WEBHOOK_URL=http://localhost:5678/
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - nexus-network
+
+volumes:
+  postgres_data:
+  n8n_data:
+
+networks:
+  nexus-network:
+    driver: bridge

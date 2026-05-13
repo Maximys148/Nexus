@@ -1,0 +1,16 @@
+target/
+*.class
+*.log
+*.jar
+*.war
+*.ear
+.mvn/wrapper/maven-wrapper.jar
+!/mvnw
+!/mvnw.cmd
+.env
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.DS_Store
