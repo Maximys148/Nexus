@@ -1,12 +1,16 @@
 package ru.maximys.nexus.backend.service;
 
 import javafx.application.Platform;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Labeled;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,8 +32,18 @@ public class MainService {
     private final SettingService settingService;
     private final AppSettings appSettings;
 
-    private double xOffset = 0;
-    private double yOffset = 0;
+    // Переменные строго для ПЕРЕТАСКИВАНИЯ окна
+    private double dragStartX = 0;
+    private double dragStartY = 0;
+
+    // Переменные строго для ИЗМЕНЕНИЯ РАЗМЕРА окна
+    private double resizeStartX = 0;
+    private double resizeStartY = 0;
+    private boolean resizeLeft = false;
+    private boolean resizeRight = false;
+    private boolean resizeTop = false;
+    private boolean resizeBottom = false;
+    private static final int RESIZE_MARGIN = 6;
 
     public MainService(LanguageService langService, UpdateService updateService, NavigationService navService, SettingService settingService, AppSettings appSettings) {
         this.langService = langService;
@@ -40,9 +54,8 @@ public class MainService {
     }
 
     public void initMainView(HBox titleBar, Map<String, Labeled> uiElements) {
-
-        // 1. Настраиваем перетаскивание
-        makeDraggable(titleBar);
+        // 1. Настраиваем геометрию(изменение размера окна) и перетаскивание
+        manageWindowGeometry(titleBar);
 
         // 2. Локализация
         bindUserInterface(uiElements);
@@ -61,25 +74,132 @@ public class MainService {
             updateButton.setManaged(true);
             versionLabel.setText(versionInfo);
         });
-
-
     }
 
-    private void makeDraggable(Node node) {
-        node.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-        node.setOnMouseDragged(event -> {
-            Stage stage = (Stage) node.getScene().getWindow();
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
+    public void manageWindowGeometry(HBox titleBar) {
+        // Подключаем перетаскивание с уникальными переменными координат
+        makeWindowDraggable(titleBar);
+
+        // Безопасное ожидание прикрепления к Scene и Stage
+        titleBar.sceneProperty().addListener((observable, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.windowProperty().addListener((obsWindow, oldWindow, newWindow) -> {
+                    if (newWindow instanceof Stage stage) {
+                        setupStageGeometry(stage, newScene);
+                    }
+                });
+            }
         });
     }
+
+    private void setupStageGeometry(Stage stage, Scene scene) {
+        stage.setMinWidth(450);
+        stage.setMinHeight(350);
+
+        stage.setWidth(appSettings.getWindowWidth());
+        stage.setHeight(appSettings.getWindowHeight());
+
+        scene.addEventHandler(MouseEvent.MOUSE_MOVED, (MouseEvent event) -> {
+            double x = event.getSceneX();
+            double y = event.getSceneY();
+            double width = scene.getWidth();
+            double height = scene.getHeight();
+
+            resizeLeft = x < RESIZE_MARGIN;
+            resizeRight = x > width - RESIZE_MARGIN;
+            resizeTop = y < RESIZE_MARGIN;
+            resizeBottom = y > height - RESIZE_MARGIN;
+
+            if (resizeLeft && resizeTop) scene.setCursor(Cursor.NW_RESIZE);
+            else if (resizeLeft && resizeBottom) scene.setCursor(Cursor.SW_RESIZE);
+            else if (resizeRight && resizeTop) scene.setCursor(Cursor.NE_RESIZE);
+            else if (resizeRight && resizeBottom) scene.setCursor(Cursor.SE_RESIZE);
+            else if (resizeLeft) scene.setCursor(Cursor.W_RESIZE);
+            else if (resizeRight) scene.setCursor(Cursor.E_RESIZE);
+            else if (resizeTop) scene.setCursor(Cursor.N_RESIZE);
+            else if (resizeBottom) scene.setCursor(Cursor.S_RESIZE);
+            else scene.setCursor(Cursor.DEFAULT);
+        });
+
+        // Изменение размера использует свои изолированные переменные resizeStartX/Y
+        scene.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
+            resizeStartX = stage.getX() - event.getScreenX();
+            resizeStartY = stage.getY() - event.getScreenY();
+        });
+
+        scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, (MouseEvent event) -> {
+            if (scene.getCursor() == Cursor.DEFAULT) return;
+
+            double mouseX = event.getScreenX();
+            double mouseY = event.getScreenY();
+
+            if (resizeRight) {
+                double newWidth = mouseX - stage.getX();
+                if (newWidth >= stage.getMinWidth()) stage.setWidth(newWidth);
+            } else if (resizeLeft) {
+                double oldWidth = stage.getWidth();
+                double newWidth = stage.getX() + oldWidth - mouseX;
+                if (newWidth >= stage.getMinWidth()) {
+                    stage.setX(mouseX);
+                    stage.setWidth(newWidth);
+                }
+            }
+
+            if (resizeBottom) {
+                double newHeight = mouseY - stage.getY();
+                if (newHeight >= stage.getMinHeight()) stage.setHeight(newHeight);
+            } else if (resizeTop) {
+                double oldHeight = stage.getHeight();
+                double newHeight = stage.getY() + oldHeight - mouseY;
+                if (newHeight >= stage.getMinHeight()) {
+                    stage.setY(mouseY);
+                    stage.setHeight(newHeight);
+                }
+            }
+        });
+
+        stage.showingProperty().addListener((observable, oldValue, isShowing) -> {
+            if (!isShowing) { // Сработает при любом закрытии/скрытии окна
+                appSettings.setWindowWidth(stage.getWidth());
+                appSettings.setWindowHeight(stage.getHeight());
+                appSettings.flush();
+            }
+        });
+
+        stage.setOnCloseRequest((WindowEvent event) -> {
+            appSettings.setWindowWidth(stage.getWidth());
+            appSettings.setWindowHeight(stage.getHeight());
+            appSettings.flush();
+        });
+    }
+
+    private void makeWindowDraggable(HBox titleBar) {
+        // Перетаскивание использует свои изолированные переменные dragStartX/Y
+        titleBar.setOnMousePressed((MouseEvent event) -> {
+            dragStartX = event.getScreenX();
+            dragStartY = event.getScreenY();
+        });
+
+        titleBar.setOnMouseDragged((MouseEvent event) -> {
+            // Если курсор изменен на стрелки ресайза, не разрешаем перетаскивание
+            if (titleBar.getScene().getCursor() != Cursor.DEFAULT) return;
+
+            Stage stage = (Stage) titleBar.getScene().getWindow();
+
+            double deltaX = event.getScreenX() - dragStartX;
+            double deltaY = event.getScreenY() - dragStartY;
+
+            stage.setX(stage.getX() + deltaX);
+            stage.setY(stage.getY() + deltaY);
+
+            dragStartX = event.getScreenX();
+            dragStartY = event.getScreenY();
+        });
+    }
+
 
     // Управляет всеми ключами переводов
     private void bindUserInterface(Map<String, Labeled> elements) {
-
         langService.bindText(elements.get("functions"), "ui.sidebar.functions");
         langService.bindText(elements.get("profile"), "ui.titlebar.profile");
         langService.bindText(elements.get("welcome"), "ui.main.welcome");
@@ -133,7 +253,13 @@ public class MainService {
         }
     }
 
-    public void exit() {
+    public void exit(Node node) {
+        if (node != null && node.getScene() != null && node.getScene().getWindow() instanceof Stage stage) {
+            // Запоминаем размеры ровно в момент клика по кнопке "Закрыть"
+            appSettings.setWindowWidth(stage.getWidth());
+            appSettings.setWindowHeight(stage.getHeight());
+            appSettings.flush(); // Мгновенный пуш в Preferences
+        }
         Platform.exit();
         System.exit(0);
     }

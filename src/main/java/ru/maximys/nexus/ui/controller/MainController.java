@@ -117,7 +117,7 @@ public class MainController {
 
     @FXML
     protected void onExitButtonClick() {
-        mainService.exit();
+        mainService.exit(titleBar);
     }
 
     @FXML
@@ -132,6 +132,6 @@ public class MainController {
 
     @FXML
     protected void onCloseClick() {
-        mainService.exit();
+        mainService.exit(titleBar);
     }
 }
